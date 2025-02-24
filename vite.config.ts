@@ -8,7 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-    },
+      '@components': path.resolve(__dirname, './src/components'),
+      '@lib': path.resolve(__dirname, './src/lib')
+    }
   },
   server: {
     host: '0.0.0.0',
@@ -16,5 +18,9 @@ export default defineConfig({
     hmr: {
       clientPort: 443
     }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
   }
 })

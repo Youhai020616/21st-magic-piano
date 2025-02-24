@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '../utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PianoKey {
@@ -10,47 +10,18 @@ interface PianoKey {
 }
 
 const pianoKeys: PianoKey[] = [
-  // 低音区
-  { note: 'C3', key: '1', sound: 'C3' },
-  { note: 'C#3', key: 'q', isBlack: true, sound: 'C#3' },
-  { note: 'D3', key: '2', sound: 'D3' },
-  { note: 'D#3', key: 'w', isBlack: true, sound: 'D#3' },
-  { note: 'E3', key: '3', sound: 'E3' },
-  { note: 'F3', key: '4', sound: 'F3' },
-  { note: 'F#3', key: 'r', isBlack: true, sound: 'F#3' },
-  { note: 'G3', key: '5', sound: 'G3' },
-  { note: 'G#3', key: 't', isBlack: true, sound: 'G#3' },
-  { note: 'A3', key: '6', sound: 'A3' },
-  { note: 'A#3', key: 'y', isBlack: true, sound: 'A#3' },
-  { note: 'B3', key: '7', sound: 'B3' },
-  
-  // 中音区
-  { note: 'C4', key: '8', sound: 'C4' },
-  { note: 'C#4', key: 'i', isBlack: true, sound: 'C#4' },
-  { note: 'D4', key: '9', sound: 'D4' },
-  { note: 'D#4', key: 'o', isBlack: true, sound: 'D#4' },
-  { note: 'E4', key: '0', sound: 'E4' },
-  { note: 'F4', key: 'a', sound: 'F4' },
-  { note: 'F#4', key: 'z', isBlack: true, sound: 'F#4' },
-  { note: 'G4', key: 's', sound: 'G4' },
-  { note: 'G#4', key: 'x', isBlack: true, sound: 'G#4' },
-  { note: 'A4', key: 'd', sound: 'A4' },
-  { note: 'A#4', key: 'c', isBlack: true, sound: 'A#4' },
-  { note: 'B4', key: 'f', sound: 'B4' },
-
-  // 高音区
-  { note: 'C5', key: 'g', sound: 'C5' },
-  { note: 'C#5', key: 'b', isBlack: true, sound: 'C#5' },
-  { note: 'D5', key: 'h', sound: 'D5' },
-  { note: 'D#5', key: 'n', isBlack: true, sound: 'D#5' },
-  { note: 'E5', key: 'j', sound: 'E5' },
-  { note: 'F5', key: 'k', sound: 'F5' },
-  { note: 'F#5', key: 'm', isBlack: true, sound: 'F#5' },
-  { note: 'G5', key: 'l', sound: 'G5' },
-  { note: 'G#5', key: ',', isBlack: true, sound: 'G#5' },
-  { note: 'A5', key: ';', sound: 'A5' },
-  { note: 'A#5', key: '.', isBlack: true, sound: 'A#5' },
-  { note: 'B5', key: '/', sound: 'B5' },
+  { note: 'C', key: 'a', sound: 'C4' },
+  { note: 'C#', key: 'w', isBlack: true, sound: 'C#4' },
+  { note: 'D', key: 's', sound: 'D4' },
+  { note: 'D#', key: 'e', isBlack: true, sound: 'D#4' },
+  { note: 'E', key: 'd', sound: 'E4' },
+  { note: 'F', key: 'f', sound: 'F4' },
+  { note: 'F#', key: 't', isBlack: true, sound: 'F#4' },
+  { note: 'G', key: 'g', sound: 'G4' },
+  { note: 'G#', key: 'y', isBlack: true, sound: 'G#4' },
+  { note: 'A', key: 'h', sound: 'A4' },
+  { note: 'A#', key: 'u', isBlack: true, sound: 'A#4' },
+  { note: 'B', key: 'j', sound: 'B4' },
 ];
 
 interface PianoGameProps {
@@ -100,20 +71,9 @@ export function PianoGame({ className }: PianoGameProps) {
 
   const getFrequency = (note: string): number => {
     const noteToFreq: { [key: string]: number } = {
-      // 低音区 (第3八度)
-      'C3': 130.81, 'C#3': 138.59, 'D3': 146.83, 'D#3': 155.56,
-      'E3': 164.81, 'F3': 174.61, 'F#3': 185.00, 'G3': 196.00,
-      'G#3': 207.65, 'A3': 220.00, 'A#3': 233.08, 'B3': 246.94,
-      
-      // 中音区 (第4八度)
       'C4': 261.63, 'C#4': 277.18, 'D4': 293.66, 'D#4': 311.13,
       'E4': 329.63, 'F4': 349.23, 'F#4': 369.99, 'G4': 392.00,
-      'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88,
-      
-      // 高音区 (第5八度)
-      'C5': 523.25, 'C#5': 554.37, 'D5': 587.33, 'D#5': 622.25,
-      'E5': 659.26, 'F5': 698.46, 'F#5': 739.99, 'G5': 783.99,
-      'G#5': 830.61, 'A5': 880.00, 'A#5': 932.33, 'B5': 987.77
+      'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88
     };
     return noteToFreq[note] || 440;
   };
@@ -222,81 +182,50 @@ export function PianoGame({ className }: PianoGameProps) {
         </div>
       )}
 
-      <div className="relative w-full overflow-hidden">
-        <div className="flex justify-center">
-          <div className="relative" style={{ width: '1024px' }}>
-            <div className="flex justify-center">
-              {pianoKeys.map((key) => (
-                <motion.div
-                  key={key.note}
-                  className={cn(
-                    "relative select-none cursor-pointer transition-colors",
-                    key.isBlack
-                      ? "w-8 h-28 -mx-4 z-10 bg-gray-900 rounded-b-lg"
-                      : "w-12 h-40 bg-white border border-gray-300 rounded-b-lg",
-                    activeKeys.has(key.note) && (key.isBlack ? "bg-gray-700" : "bg-gray-100")
-                  )}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleKeyPress(key)}
-                >
-                  <span
-                    className={cn(
-                      "absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-medium",
-                      key.isBlack ? "text-white" : "text-gray-900"
-                    )}
-                  >
-                    {key.key.toUpperCase()}
-                  </span>
-                  <span
-                    className={cn(
-                      "absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-medium",
-                      key.isBlack ? "text-white/60" : "text-gray-500"
-                    )}
-                  >
-                    {key.note}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-
-            <AnimatePresence>
-              {activeKeys.size > 0 && (
-                <motion.div
-                  className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-sm text-muted-foreground whitespace-nowrap"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                >
-                  {Array.from(activeKeys).join(' ')}
-                </motion.div>
+      <div className="relative">
+        <div className="flex">
+          {pianoKeys.map((key) => (
+            <motion.div
+              key={key.note}
+              className={cn(
+                "relative select-none cursor-pointer transition-colors",
+                key.isBlack
+                  ? "w-10 h-32 -mx-5 z-10 bg-gray-900 rounded-b-lg"
+                  : "w-14 h-48 bg-white border border-gray-300 rounded-b-lg",
+                activeKeys.has(key.note) && (key.isBlack ? "bg-gray-700" : "bg-gray-100")
               )}
-            </AnimatePresence>
-          </div>
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleKeyPress(key)}
+            >
+              <span
+                className={cn(
+                  "absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-medium",
+                  key.isBlack ? "text-white" : "text-gray-900"
+                )}
+              >
+                {key.key.toUpperCase()}
+              </span>
+            </motion.div>
+          ))}
         </div>
+
+        <AnimatePresence>
+          {activeKeys.size > 0 && (
+            <motion.div
+              className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-sm text-muted-foreground"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+            >
+              {Array.from(activeKeys).join(' ')}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div className="w-full max-w-4xl mx-auto mt-16">
-        <div className="text-center text-sm text-muted-foreground space-y-4">
-          <div className="font-medium text-lg">键盘控制说明</div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-card p-4 rounded-lg space-y-2">
-              <div className="font-medium text-primary">低音区</div>
-              <div>白键：1 2 3 4 5 6 7</div>
-              <div>黑键：Q W R T Y</div>
-            </div>
-            <div className="bg-card p-4 rounded-lg space-y-2">
-              <div className="font-medium text-primary">中音区</div>
-              <div>白键：8 9 0 A S D F</div>
-              <div>黑键：I O Z X C</div>
-            </div>
-            <div className="bg-card p-4 rounded-lg space-y-2">
-              <div className="font-medium text-primary">高音区</div>
-              <div>白键：G H J K L ; /</div>
-              <div>黑键：B N M , .</div>
-            </div>
-          </div>
-        </div>
+      <div className="text-center text-sm text-muted-foreground">
+        使用键盘按键 (A-J) 来演奏钢琴
       </div>
     </div>
   );
